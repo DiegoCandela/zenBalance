@@ -1,0 +1,113 @@
+/* Estilos básicos del navbar */
+.navbar {
+    background-color: #9ef2ff;
+    color: rgb(0, 0, 0);
+    width: 100%;
+    height: 80px; /* Altura adecuada para un navbar */
+    position: fixed; /* Fijar en la parte superior */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Asegura que el navbar quede por encima de otros elementos */
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid #009ab1;
+  }
+  
+  .navbar__container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /* Ajuste para logo, menú, y login */
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto; /* Centrar el contenido */
+    padding: 0 20px; /* Espaciado interno */
+    box-sizing: border-box;
+  }
+  
+  /* Estilo para el logo */
+  .navbar__logo-img {
+    width: 60px;
+    height: auto;
+  }
+  
+  /* Estilo de las pestañas de navegación */
+  .navbar__menu {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Links de navegación */
+  .navbar__links {
+    display: flex;
+    list-style: none;
+    gap: 60px; /* Espaciado entre las pestañas */
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar__link {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar__link:hover {
+    color: #ffcc00;
+  }
+  
+  /* Estilo del icono de login */
+  .navbar__login-img {
+    width: 40px;
+    height: auto;
+  }
+  
+  /* Icono del menú hamburguesa para móviles */
+  .navbar__menu-icon {
+    display: none; /* Ocultar por defecto */
+    cursor: pointer;
+  }
+  
+  /* Responsividad: ajustar el navbar en pantallas pequeñas */
+  @media (max-width: 768px) {
+    .navbar__container {
+      grid-template-columns: 1fr 1fr; /* Dos columnas para logo y login */
+    }
+  
+    .navbar__menu {
+      display: none; /* Ocultar el menú en pantallas pequeñas */
+    }
+  
+    .navbar__login {
+      justify-self: end;
+    }
+  
+    .navbar__menu-icon {
+      display: block; /* Mostrar el icono del menú en móviles */
+    }
+  
+    /* Mostrar menú desplegable al hacer clic en el icono */
+    .navbar__menu--active {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: absolute;
+      top: 80px; /* Ajustar para que el menú esté justo debajo del navbar */
+      right: 0;
+      background-color: #9ef2ff; /* Color de fondo del menú desplegable */
+      padding: 20px;
+      width: 100%;
+    }
+  
+    .navbar__link {
+      font-size: 18px; /* Tamaño de fuente más grande en móviles */
+    }
+  }
+  
+  /* Asegúrate de tener este estilo para mostrar el icono de menú hamburguesa */
+  .navbar__login {
+    display: flex;
+    justify-content: flex-end; /* Justificar el icono de login a la derecha */
+  }
+  
