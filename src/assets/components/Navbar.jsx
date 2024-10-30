@@ -20,10 +20,10 @@ const Navbar = () => {
                 </div>
                 <nav className={`navbar__menu ${menuActive ? "navbar__menu--active" : ""}`}>
                     <ul className="navbar__links">
-                        <li><a href="#home" className="navbar__link">Inicio</a></li>
-                        <li><a href="#about" className="navbar__link">Perfil</a></li>
-                        <li><a href="#services" className="navbar__link">Recursos</a></li>
-                        <li><a href="#contact" className="navbar__link">Nosotros</a></li>
+                        <li><a href="#home" className="navbar__link">INICIO</a></li>
+                        <li><a href="#about" className="navbar__link">PERFIL</a></li>
+                        <li><a href="#services" className="navbar__link">RECURSOS</a></li>
+                        <li><a href="#contact" className="navbar__link">NOSOTROS</a></li>
                     </ul>
                 </nav>
                 <div className="navbar__login">
