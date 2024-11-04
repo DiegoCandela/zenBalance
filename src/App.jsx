@@ -7,16 +7,16 @@ import Home from './assets/components/Home';
 
 function App() {
   return (
-      <Router>
-        <Navbar />
-        <main> {/* Añadido un contenedor principal para el contenido */}
-          <Routes>
-            <Route path="/" element={<Home />} />
-            {/* Agrega más rutas aquí para otras páginas */}
-          </Routes>
-        </main>
-        <Footer /> {/* Mueve el Footer fuera de Routes */}
-      </Router>
+    <Router>
+      <Navbar />
+      <main style={{ marginTop: '13vh', marginBottom: '10vh' }}> {/* Márgenes para evitar que el contenido quede detrás del navbar y footer */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/* Agrega más rutas aquí para otras páginas */}
+        </Routes>
+      </main>
+      <Footer />
+    </Router>
   );
 }
 

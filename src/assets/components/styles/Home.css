@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+}
+
+.home-page {
+    text-align: center;
+    padding: 20px; /* Añadido espaciado superior e inferior */
+}
+
+.welcome-header h1 {
+    color: #333;
+    font-size: 2.5rem; /* Aumentado tamaño */
+    margin-bottom: 30px; /* Aumentado espaciado */
+}
+
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.image-section img {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    border-radius: 10px; /* Esquinas redondeadas */
+}
+
+.text-section {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-box {
+    border: 2px solid #4a90e2;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.text-box h2 {
+    color: #4a90e2; /* Color más destacado */
+    margin-bottom: 15px;
+}
+
+.text-box p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.cta-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #357ab8; /* Color al pasar el mouse */
+}
+
+/* Responsive para pantallas medianas */
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column;
+        padding: 5px;
+    }
+
+    .image-section img {
+        max-width: 300px;
+    }
+
+    .text-section {
+        padding: 5px;
+    }
+
+    .text-box {
+        padding: 15px;
+    }
+
+    .welcome-header h1 {
+        font-size: 2rem; /* Ajustado */
+    }
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 480px) {
+    .home-container {
+        flex-direction: column;
+        padding: 10px;
+        width: 90%;
+    }
+
+    .image-section img {
+        max-width: 250px;
+    }
+
+    .text-section {
+        padding: 10px;
+    }
+
+    .text-box {
+        padding: 10px;
+    }
+
+    .welcome-header h1 {
+        font-size: 1.5rem; /* Ajustado */
+    }
+
+    .text-box h2 {
+        font-size: 1.2rem; /* Ajustado */
+    }
+
+    .text-box p {
+        font-size: 1rem; /* Ajustado */
+    }
+}
