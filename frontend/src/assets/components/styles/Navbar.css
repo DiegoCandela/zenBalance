@@ -1,0 +1,194 @@
+/* Estilos generales del navbar */
+.navbar {
+  background-color: #9ef2ff;
+  width: 100%;
+  height: 13vh; /* Aumenta la altura del navbar al 13% de la altura de la ventana */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 2%;
+  box-sizing: border-box;
+  border-bottom: 4px solid #009ab1;
+  transition: background-color 0.3s ease;
+}
+
+/* Contenedor principal para la distribución */
+.navbar__container {
+  display: flex;
+  justify-content: space-between; /* Espacio entre logo, menú y login */
+  align-items: center; /* Alinea todo verticalmente en el centro */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2%;
+  box-sizing: border-box;
+}
+
+/* Estilo del contenedor del logo y el nombre */
+.navbar__logo {
+  display: flex; /* Utiliza flexbox para alinear horizontalmente */
+  align-items: center; /* Alinea verticalmente al centro */
+  text-decoration: none;
+}
+
+/* Estilo del logo */
+.navbar__logo-img {
+  height: 100%; /* La altura del logo será el 100% de la altura del navbar */
+  max-height: 8vh; /* Limita la altura máxima del logo */
+  object-fit: contain; /* Asegura que la imagen no se distorsione */
+  width: auto; /* Mantiene la proporción original del logo */
+  padding: 0; /* Elimina cualquier padding innecesario */
+}
+
+/* Estilo del nombre del sitio */
+.navbar__site-name {
+  font-size: 2rem; /* Tamaño del texto */
+  font-weight: 700; /* Grosor de la fuente */
+  color: rgb(0, 0, 0); /* Color del texto */
+  margin-left: 10px; /* Espaciado entre el logo y el nombre */
+  display: inline-block; /* Asegura que se alinee correctamente */
+  line-height: 1; /* Elimina cualquier margen extra vertical */
+  align-self: center; /* Asegura que el nombre se alinee verticalmente en el centro */
+}
+
+/* Contenedor del login con el nombre del usuario */
+.navbar__login-container {
+  display: flex;
+  align-items: center; /* Alinea el nombre y el icono verticalmente */
+  gap: 10px; /* Espaciado entre el nombre del usuario y el icono */
+  height: 100%; /* Asegura que el contenedor ocupe toda la altura del navbar */
+}
+
+/* Estilo del link del login */
+.navbar__login {
+  display: flex;
+  align-items: center; /* Alinea el icono y el nombre verticalmente */
+  text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+/* Estilos para el nombre de usuario */
+.navbar__username {
+  font-size: 1.2rem; /* Tamaño de la fuente */
+  font-weight: 600; /* Grosor del texto */
+  color: #333; /* Color del texto */
+  margin-left: 8px; /* Espacio entre el icono y el nombre */
+  display: inline-block;
+  line-height: 1;
+  align-self: center; /* Asegura que el nombre esté centrado verticalmente */
+}
+
+/* Icono de login */
+.navbar__login-img {
+  height: 100%; /* La altura del ícono de login será el 100% de la altura del navbar */
+  max-height: 8vh; /* Limita la altura máxima del ícono */
+  object-fit: contain; /* Asegura que la imagen no se distorsione */
+  width: auto; /* Mantiene la proporción original del ícono */
+}
+
+/* Icono del menú hamburguesa */
+.navbar__menu-icon {
+  display: none; /* Oculto en pantallas grandes */
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+
+/* Estilo de las pestañas de navegación */
+.navbar__menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* Links de navegación */
+.navbar__links {
+  display: flex;
+  list-style: none;
+  gap: 50px; /* Ajuste de separación entre enlaces */
+  padding: 0;
+  margin: 0;
+}
+
+.navbar__link {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar__link:hover {
+  color: #ffcc00;
+}
+
+/* Estilo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .navbar__menu-icon {
+    display: block; /* Mostrar icono de menú en móviles */
+  }
+
+  .navbar__menu {
+    display: none; /* Ocultar el menú en móviles inicialmente */
+    position: absolute;
+    top: 10vh;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: #9ef2ff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    z-index: 999;
+  }
+
+  .navbar__menu--active {
+    display: flex; /* Mostrar el menú desplegable cuando está activo */
+  }
+
+  .navbar__links {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .navbar__link {
+    font-size: 1.5rem;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .navbar__logo-img {
+    height: 80%; /* Ajusta la altura del logo a pantallas medianas */
+    max-height: 6vh; /* Limita la altura máxima del logo */
+  }
+
+  .navbar__login-img {
+    width: 30px; /* Ajuste del tamaño del ícono de login */
+  }
+
+  .navbar__menu-icon {
+    width: 30px; /* Ajuste del tamaño del menú */
+  }
+}
+
+/* Ajustes adicionales para pantallas más pequeñas */
+@media (max-width: 480px) {
+  .navbar__logo-img {
+    height: 70%; /* Ajuste del tamaño del logo en pantallas pequeñas */
+    max-height: 5vh; /* Limita la altura máxima del logo en móviles */
+  }
+
+  .navbar__login-img {
+    height: 70%; /* Ajuste del tamaño del ícono de login en pantallas pequeñas */
+    max-height: 5vh; /* Limita la altura máxima del ícono de login en móviles */
+  }
+
+  .navbar__menu-icon {
+    width: 25px; /* Ajuste del tamaño del menú */
+  }
+}

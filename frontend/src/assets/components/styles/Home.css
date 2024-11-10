@@ -1,0 +1,191 @@
+/* Estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    min-height: 100vh;
+}
+
+/* Contenedor principal */
+.home-page {
+    padding: 2rem 1rem;
+    min-height: 100vh;
+}
+
+/* Encabezado */
+.welcome-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.welcome-header h1 {
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+/* Contenedor principal de contenido */
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+/* Sección de imagen */
+.image-section {
+    flex-shrink: 0;
+}
+
+.image-section img {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Sección de texto */
+.text-section {
+    flex: 1;
+    min-width: 300px;
+}
+
+.text-box {
+    background-color: #fff;
+    border: 2px solid #4a90e2;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.text-box h2 {
+    color: #4a90e2;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.text-box p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Botón CTA */
+.cta-button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: auto; /* Asegura que el botón solo tome el ancho necesario */
+    max-width: 50%; /* Establece un ancho máximo */
+}
+
+.cta-button:hover {
+    background-color: #357abd;
+    transform: translateY(-2px);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+}
+
+/* Sección FAQ */
+.faq-container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 4rem auto 2rem;
+    padding: 0 1rem;
+}
+
+.faq-container h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+
+.faq-item {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.faq-item h3 {
+    color: #4a90e2;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.faq-item p {
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Media Queries */
+@media (max-width: 968px) {
+    .home-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .image-section {
+        margin-bottom: 2rem;
+    }
+
+    .welcome-header h1 {
+        font-size: 2rem;
+    }
+
+    .text-box h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-page {
+        padding: 1rem;
+    }
+
+    .welcome-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .image-section img {
+        max-width: 300px;
+    }
+
+    .text-box {
+        padding: 1.5rem;
+    }
+
+    .text-box h2 {
+        font-size: 1.3rem;
+    }
+
+    .faq-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .faq-item {
+        padding: 1rem;
+    }
+}
