@@ -1,0 +1,22 @@
+.perfil {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.perfil__info {
+    font-size: 1.1rem;
+    margin-top: 15px;
+}
+
+.perfil__info p {
+    margin: 10px 0;
+}
+
+.perfil__info strong {
+    color: #333;
+}

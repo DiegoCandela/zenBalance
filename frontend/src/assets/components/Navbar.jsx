@@ -49,7 +49,7 @@ const Navbar = () => {
                 <nav className={`navbar__menu ${menuActive ? "navbar__menu--active" : ""}`}>
                     <ul className="navbar__links">
                         <li><Link to="/" className="navbar__link">INICIO</Link></li>
-                        <li><a href="#about" className="navbar__link">PERFIL</a></li>
+                        <li><Link to="/perfil" className="navbar__link">PERFIL</Link></li>
                         <li><a href="#services" className="navbar__link">RECURSOS</a></li>
                         <li><a href="#contact" className="navbar__link">NOSOTROS</a></li>
                     </ul>

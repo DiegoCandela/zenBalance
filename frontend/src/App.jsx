@@ -6,6 +6,7 @@ import Navbar from './assets/components/Navbar';
 import Footer from './assets/components/Footer';
 import Home from './assets/components/Home';
 import Login from './assets/components/Login';
+import Perfil from './assets/components/Perfil';
 import { UserProvider } from './assets/context/UserContext';
 
 
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/perfil" element={<Login />} />
           </Routes>
         </main>
         <Footer />
