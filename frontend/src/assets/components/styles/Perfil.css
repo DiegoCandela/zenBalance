@@ -1,22 +1,206 @@
-.perfil {
+/* src/components/styles/Perfil.css */
+
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eaeaea;
+    gap: 40px;
+}
+
+.profile-avatar {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
     padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #f8f8f8;
+}
+
+.user-icon {
+    font-size: 180px;
+    color: #A3D9E1;
+    filter: drop-shadow(0 4px 6px rgba(163, 217, 225, 0.2));
+    transition: color 0.3s ease;
+}
+
+.user-icon:hover {
+    color: #82C8D4;
+}
+
+.profile-info {
+    flex: 2;
+    padding: 20px;
+}
+
+.profile-info h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-weight: 600;
+    border-bottom: 2px solid #A3D9E1;
+    padding-bottom: 10px;
+}
+
+/* Nueva clase para el contenedor del formulario */
+.profile-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+/* Ajuste para que algunos campos ocupen todo el ancho */
+.profile-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.profile-field {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.profile-field label {
+    font-weight: 500;
+    color: #546e7a;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.profile-field:focus-within label {
+    color: #A3D9E1;
+}
+
+.profile-field input[type="number"],
+.profile-field textarea {
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    width: 100%;
+    resize: vertical;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    min-height: 45px;
 }
 
-.perfil__info {
-    font-size: 1.1rem;
-    margin-top: 15px;
+.profile-field textarea {
+    min-height: 120px;
 }
 
-.perfil__info p {
-    margin: 10px 0;
+.profile-field input[type="number"]:focus,
+.profile-field textarea:focus {
+    border-color: #A3D9E1;
+    box-shadow: 0 0 0 4px rgba(163, 217, 225, 0.1);
+    outline: none;
 }
 
-.perfil__info strong {
-    color: #333;
+.profile-field input[type="number"]:disabled,
+.profile-field textarea:disabled {
+    background-color: #f8f9fa;
+    border-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Contenedor para los botones */
+.profile-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #A3D9E1;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+button:hover {
+    background-color: #82C8D4;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(130, 200, 212, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.message {
+    grid-column: 1 / -1;
+    margin: 15px 0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease;
+}
+
+.message.success {
+    color: #2e7d32;
+    background-color: #e8f5e9;
+    border: 1px solid #c8e6c9;
+}
+
+.message.error {
+    color: #c62828;
+    background-color: #ffebee;
+    border: 1px solid #ffcdd2;
+}
+
+@media (max-width: 992px) {
+    .profile-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .profile-avatar {
+        margin-bottom: 20px;
+    }
+
+    .user-icon {
+        font-size: 120px;
+    }
+
+    .profile-info {
+        padding: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

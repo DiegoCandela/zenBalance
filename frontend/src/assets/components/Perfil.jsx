@@ -1,97 +1,125 @@
-import React, { useContext, useState, useEffect } from "react";
-import { UserContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import "./styles/Perfil.css";
+// src/components/Perfil.jsx
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { UserContext } from '../context/UserContext';
+import { Icon } from '@iconify/react';
+import './styles/Perfil.css';
 
 const Perfil = () => {
-  const { username, setUsername } = useContext(UserContext); // Obtenemos el contexto del usuario
-  const navigate = useNavigate(); // Para redirigir al login si es necesario
+  const { username, isAuthenticated } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [age, setAge] = useState('');
+  const [personalDescription, setPersonalDescription] = useState('');
+  const [improvementDescription, setImprovementDescription] = useState('');
+  const [message, setMessage] = useState('');
+  const [isEditing, setIsEditing] = useState(false); // Estado para controlar el modo de edición
 
-  // Estado para manejar el nuevo nombre de usuario
-  const [newUsername, setNewUsername] = useState(username || "");
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // Estado para la carga
-
-  // Redirigir al login si no hay usuario autenticado
   useEffect(() => {
-    if (!username) {
-      navigate("/login");  // Redirige al login si no hay usuario
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log("No hay token, redirigiendo a login");
+      navigate('/login');
+    } else if (isAuthenticated) {
+      fetchProfile();
     }
-  }, [username, navigate]);
+  }, [isAuthenticated, navigate]);
 
-  // Función para manejar la actualización del perfil
-  const handleUpdateProfile = async () => {
-    if (!newUsername.trim()) {
-      setError("El nombre de usuario no puede estar vacío.");
-      return;
-    }
-
+  const fetchProfile = async () => {
     try {
-      setIsLoading(true); // Activamos la carga
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:5000/api/auth/profile', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-      const token = localStorage.getItem("token"); // Recuperamos el token del localStorage
-      if (!token) {
-        setError("No se proporcionó un token de autenticación.");
-        return;
+      const { age, personalDescription, improvementDescription } = response.data;
+      setAge(age || '');
+      setPersonalDescription(personalDescription || '');
+      setImprovementDescription(improvementDescription || '');
+    } catch (error) {
+      console.error('Error al cargar el perfil:', error);
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
       }
+    }
+  };
 
-      // Realizamos la solicitud PUT para actualizar el nombre de usuario
+  const handleEdit = () => {
+    setIsEditing(true); // Habilitar el modo de edición
+  };
+
+  const handleSave = async () => {
+    try {
+      const token = localStorage.getItem('token');
       const response = await axios.put(
-        `http://localhost:5000/api/auth/${id}`,  // Asegúrate de que esta sea la URL correcta
-        { username: newUsername },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        'http://localhost:5000/api/auth/update-profile',
+        { age, personalDescription, improvementDescription },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Si la respuesta es exitosa, actualizamos el contexto y el localStorage
-      if (response.status === 200) {
-        setUsername(newUsername); // Actualizamos el nombre en el contexto
-        localStorage.setItem("username", newUsername); // Actualizamos el nombre en el localStorage
-        alert("Perfil actualizado con éxito.");
-        setIsLoading(false); // Desactivamos la carga
-      }
+      setMessage(response.data.message);
+      setIsEditing(false); // Deshabilitar el modo de edición
     } catch (error) {
-      setIsLoading(false); // Desactivamos la carga en caso de error
-      const errorMessage = error.response?.data?.message || error.message || "Error al actualizar el perfil.";
-      setError(errorMessage); // Mostramos el error
+      setMessage('Error al actualizar el perfil');
+      console.error(error);
     }
   };
 
   return (
-    <div className="perfil">
-      {username ? (
-        <>
-          <h1>Perfil del Usuario</h1>
-          <div className="perfil__info">
-            <p><strong>Nombre:</strong> {username}</p>
-          </div>
+    <div className="profile-container">
+      {/* Sección izquierda: ícono de usuario de Iconify */}
+      <div className="profile-avatar">
+        <Icon icon="mdi:account-circle" className="user-icon" />
+      </div>
 
-          <h2>Editar Perfil</h2>
-          {error && <p className="error">{error}</p>} {/* Mostramos el error si existe */}
-          <div className="perfil__form">
-            <label>
-              Nombre de usuario:
-              <input
-                type="text"
-                value={newUsername}
-                onChange={(e) => setNewUsername(e.target.value)} // Actualizamos el nombre al escribir
-              />
-            </label>
-            <button
-              onClick={handleUpdateProfile}
-              disabled={isLoading} // Deshabilitamos el botón mientras se está procesando
-            >
-              {isLoading ? "Actualizando..." : "Actualizar Nombre"}
-            </button>
-          </div>
-        </>
-      ) : (
-        <p>Redirigiendo al inicio de sesión...</p>
-      )}
+      {/* Sección derecha: Información del perfil */}
+      <div className="profile-info">
+        <h1>Perfil de {username}</h1>
+        {message && <p className="message">{message}</p>}
+
+        <div className="profile-field">
+          <label htmlFor="age">Edad:</label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            disabled={!isEditing} // Deshabilitar si no está en modo edición
+          />
+        </div>
+        
+        <div className="profile-field">
+          <label htmlFor="personalDescription">Descripción Personal:</label>
+          <textarea
+            id="personalDescription"
+            name="personalDescription"
+            value={personalDescription}
+            onChange={(e) => setPersonalDescription(e.target.value)}
+            rows="3"
+            disabled={!isEditing} // Deshabilitar si no está en modo edición
+          ></textarea>
+        </div>
+        
+        <div className="profile-field">
+          <label htmlFor="improvementDescription">Cosas que quiero mejorar:</label>
+          <textarea
+            id="improvementDescription"
+            name="improvementDescription"
+            value={improvementDescription}
+            onChange={(e) => setImprovementDescription(e.target.value)}
+            rows="3"
+            disabled={!isEditing} // Deshabilitar si no está en modo edición
+          ></textarea>
+        </div>
+
+        {/* Mostrar el botón Editar o Guardar Cambios según el modo */}
+        {!isEditing ? (
+          <button onClick={handleEdit}>Editar</button>
+        ) : (
+          <button onClick={handleSave}>Guardar Cambios</button>
+        )}
+      </div>
     </div>
   );
 };

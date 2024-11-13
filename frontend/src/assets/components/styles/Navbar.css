@@ -88,6 +88,13 @@
   width: auto; /* Mantiene la proporción original del ícono */
 }
 
+.navbar__logout-icon {
+  cursor: pointer;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+
 /* Icono del menú hamburguesa */
 .navbar__menu-icon {
   display: none; /* Oculto en pantallas grandes */
@@ -192,3 +199,4 @@
     width: 25px; /* Ajuste del tamaño del menú */
   }
 }
+

@@ -1,3 +1,4 @@
+// src/components/Login.jsx
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -25,13 +26,12 @@ const Login = () => {
       localStorage.setItem('token', token);
       localStorage.setItem("user", JSON.stringify({ name: user.name }));
       
-      // Actualizar el nombre de usuario en el contexto
-      updateUser(user.name);
-
-      alert('Login exitoso');
+      updateUser(user.name);  // Actualizar el contexto con el nombre del usuario
+      console.log("Inicio de sesión exitoso, usuario:", user.name);
       navigate('/');
     } catch (error) {
       setError('Error al iniciar sesión. Verifica tus credenciales.');
+      console.error("Error en el inicio de sesión:", error);
     }
   };
 

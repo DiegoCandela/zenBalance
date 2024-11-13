@@ -4,37 +4,28 @@ import User from "../img/User.png";
 import { Icon } from '@iconify/react';
 import "./styles/Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from '../context/UserContext'
+import { UserContext } from '../context/UserContext';
 
 const Navbar = () => {
     const [menuActive, setMenuActive] = useState(false);
-    const { username, updateUser } = useContext(UserContext); // Asegúrate de tener updateUser en tu contexto
+    const { username, isAuthenticated, logout } = useContext(UserContext);
     const navigate = useNavigate();
 
     const toggleMenu = () => {
         setMenuActive(!menuActive);
     };
 
-    const handleLoginClick = (e) => {
-        // Prevenir el comportamiento predeterminado del enlace si el usuario hace clic en "Login"
-        e.preventDefault();
+    const handleLogoutClick = () => {
+        const confirmLogout = window.confirm("¿Deseas cerrar sesión?");
+        if (confirmLogout) {
+            logout();
+            navigate('/login');
+        }
+    };
 
-        if (username) {
-            // Si el usuario está logueado, preguntamos si quiere cerrar sesión
-            const confirmLogout = window.confirm("¿Deseas cerrar sesión?");
-            if (confirmLogout) {
-                // Eliminar el token y los datos del usuario del localStorage
-                localStorage.removeItem('user');
-                // Actualizar el estado global o el contexto (si usas un UserContext)
-                updateUser("");  
-                // Redirigir al login
-                navigate('/login');
-            } else {
-                // Si cancela, redirigir al Home
-                navigate('/');
-            }
-        } else {
-            // Si el usuario no está logueado, lo redirigimos al login
+    const handleLoginClick = (e) => {
+        if (!isAuthenticated) {
+            e.preventDefault();
             navigate('/login');
         }
     };
@@ -49,17 +40,25 @@ const Navbar = () => {
                 <nav className={`navbar__menu ${menuActive ? "navbar__menu--active" : ""}`}>
                     <ul className="navbar__links">
                         <li><Link to="/" className="navbar__link">INICIO</Link></li>
-                        <li><Link to="/perfil" className="navbar__link">PERFIL</Link></li>
+                        {isAuthenticated && <li><Link to="/perfil" className="navbar__link">PERFIL</Link></li>}
                         <li><a href="#services" className="navbar__link">RECURSOS</a></li>
                         <li><a href="#contact" className="navbar__link">NOSOTROS</a></li>
                     </ul>
                 </nav>
                 <div className="navbar__login-container">
-                    {/* Evita el comportamiento predeterminado del Link */}
                     <a href="/login" className="navbar__login" onClick={handleLoginClick}>
                         <img src={User} alt="Login" className="navbar__login-img" />
-                        {username && <span className="navbar__username">{username}</span>}
+                        {isAuthenticated && <span className="navbar__username">{username}</span>}
                     </a>
+                    {isAuthenticated && (
+                        <Icon
+                            icon="ic:baseline-logout"
+                            width="20"
+                            height="20"
+                            className="navbar__logout-icon"
+                            onClick={handleLogoutClick}
+                        />
+                    )}
                 </div>
                 <div className="navbar__menu-icon" onClick={toggleMenu}>
                     <Icon icon="ic:baseline-menu" width="30" height="30" />
