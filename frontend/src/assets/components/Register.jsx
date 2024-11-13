@@ -78,6 +78,9 @@ const Register = () => {
 
         <button type="submit">Registrarse</button>
       </form>
+      <p className="register-prompt">
+        ¿Ya tienes una cuenta? <Link to="/login">Iniciar Sesion</Link>
+      </p>
     </div>
   );
 };
