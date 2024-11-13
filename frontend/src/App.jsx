@@ -8,6 +8,7 @@ import Home from './assets/components/Home';
 import Login from './assets/components/Login';
 import Perfil from './assets/components/Perfil';
 import { UserProvider } from './assets/context/UserContext';
+import Register from './assets/components/Register';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/perfil" element={<Perfil />} />
           </Routes>
         </main>

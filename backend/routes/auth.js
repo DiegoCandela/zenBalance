@@ -42,6 +42,29 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Ruta de registro
+router.post('/register', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    // Verificar si el usuario ya está registrado
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'El correo ya está en uso.' });
+    }
+
+    // Crear un nuevo usuario
+    const newUser = new User({ username, email, password });
+
+    // Guardar el usuario en la base de datos
+    await newUser.save();
+
+    res.status(201).json({ message: 'Usuario registrado con éxito' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error en el servidor', error });
+  }
+});
+
 
 // Ruta para obtener el perfil del usuario autenticado
 router.get('/profile', verifyToken, async (req, res) => {

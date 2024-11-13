@@ -1,7 +1,7 @@
 // src/components/Login.jsx
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Importar Link para el enlace de registro
 import { UserContext } from '../context/UserContext';
 import "./styles/Login.css";
 
@@ -56,8 +56,12 @@ const Login = () => {
         />
         <button type="submit">Iniciar Sesión</button>
       </form>
+      <p className="register-prompt">
+        ¿No tienes una cuenta? <Link to="/register">Regístrate</Link>
+      </p>
     </div>
   );
 };
 
 export default Login;
+  
