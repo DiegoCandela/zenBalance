@@ -193,11 +193,17 @@ const Perfil = () => {
 
           <div className="form-actions">
             {!isEditing ? (
-              <button onClick={handleEdit} className="btn btn-primary">
+              <button
+                onClick={handleEdit}
+                className="btn btn-primary btn-fixed"
+              >
                 Editar Perfil
               </button>
             ) : (
-              <button onClick={handleSave} className="btn btn-primary">
+              <button
+                onClick={handleSave}
+                className="btn btn-primary btn-fixed"
+              >
                 Guardar Cambios
               </button>
             )}

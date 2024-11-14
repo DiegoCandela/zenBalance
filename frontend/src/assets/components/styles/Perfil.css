@@ -114,7 +114,7 @@
 }
 
 .tasks-section h2 {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-color);
@@ -124,18 +124,27 @@
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
-    align-items: center; /* Centra verticalmente el botón y el campo de texto */
+    align-items: center;
+    margin-top: 1rem;
 }
 
 .tasks-add .form-input {
+    flex-basis: 75%;
     flex-grow: 1;
-    height: 40px; /* Altura uniforme */
-    padding: 0.75rem; /* Ajusta el padding interno */
-    box-sizing: border-box; /* Asegura que el padding no altere el tamaño total */
-    margin: 0; /* Elimina márgenes adicionales */
-    line-height: normal; /* Asegura una alineación de texto uniforme */
+    height: 40px;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    margin: 0;
+    line-height: normal;
+}
+
+.tasks-add .btn-primary {
+    flex-basis: 25%;
+    height: 40px;
+    padding: 0.75rem;
     display: flex;
-    align-items: center; /* Alinea el contenido en el centro verticalmente */
+    align-items: center;
+    justify-content: center;
 }
 
 .tasks-list {
@@ -176,14 +185,21 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
+    display: inline-block; 
+    justify-content: center;
+}
+
+.btn-fixed {
+    width: 150px;
+    justify-content: center;
 }
 
 .btn-primary {
     background: var(--primary-color);
     color: white;
     border: none;
-    height: 40px; /* Asegura una altura uniforme */
-    padding: 0.75rem; /* Ajusta el padding interno */
+    height: 40px;
+    padding: 0.75rem;
     box-sizing: border-box; /* Asegura que el padding no altere el tamaño total */
     margin: 0; /* Elimina márgenes adicionales */
     line-height: normal; /* Asegura una alineación de texto uniforme */
@@ -205,6 +221,7 @@
 .btn-secondary:hover {
     background: #e2e8f0;
 }
+
 
 .btn-danger {
     background: var(--danger-color);

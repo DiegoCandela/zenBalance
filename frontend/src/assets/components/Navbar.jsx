@@ -8,6 +8,7 @@ import { UserContext } from '../context/UserContext';
 
 const Navbar = () => {
     const [menuActive, setMenuActive] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const { username, isAuthenticated, logout } = useContext(UserContext);
     const navigate = useNavigate();
 
@@ -16,11 +17,17 @@ const Navbar = () => {
     };
 
     const handleLogoutClick = () => {
-        const confirmLogout = window.confirm("¿Deseas cerrar sesión?");
-        if (confirmLogout) {
-            logout();
-            navigate('/login');
-        }
+        setShowLogoutModal(true);
+    };
+
+    const confirmLogout = () => {
+        logout();
+        setShowLogoutModal(false);
+        navigate('/login');
+    };
+
+    const cancelLogout = () => {
+        setShowLogoutModal(false);
     };
 
     const handleLoginClick = (e) => {
@@ -64,6 +71,19 @@ const Navbar = () => {
                     <Icon icon="ic:baseline-menu" width="30" height="30" />
                 </div>
             </div>
+
+            {/* Modal de confirmación de cierre de sesión */}
+            {showLogoutModal && (
+                <div className="logout-modal">
+                    <div className="logout-modal__content">
+                        <h2>¿Deseas cerrar sesión?</h2>
+                        <div className="logout-modal__buttons">
+                            <button onClick={confirmLogout} className="btn btn-primary">Sí</button>
+                            <button onClick={cancelLogout} className="btn btn-secondary">No</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </header>
     );
 };

@@ -131,6 +131,70 @@
 .navbar__link:hover {
   color: #ffcc00;
 }
+/* Modal Background */
+.logout-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.logout-modal__content {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 300px;
+}
+
+.logout-modal__buttons {
+  display: flex;
+  align-items: center; /* Alineación vertical de los botones */
+  justify-content: center; /* Centra los botones horizontalmente */
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  margin: 0; /* Elimina cualquier margen adicional */
+  display: flex;
+  align-items: center; /* Centra el texto verticalmente */
+  justify-content: center; /* Centra el texto horizontalmente */
+}
+
+.btn-primary {
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #357ABD;
+}
+
+.btn-secondary {
+  background-color: #e2e8f0;
+  color: #334155;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #cbd5e1;
+}
+
 
 /* Estilo para pantallas pequeñas */
 @media (max-width: 768px) {
