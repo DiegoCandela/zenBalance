@@ -1,12 +1,14 @@
+// tareas.js
 const express = require('express');
 const router = express.Router();
 const Tarea = require('../models/Tarea');
+const verifyToken = require('../middlewares/verifyToken'); // Middleware de autenticación
 
-// Crear una tarea
-router.post('/', async (req, res) => {
+// Crear una tarea para el usuario autenticado
+router.post('/', verifyToken, async (req, res) => {
   try {
-    const { task, completed } = req.body;
-    const newTarea = new Tarea({ task, completed });
+    const { task } = req.body;
+    const newTarea = new Tarea({ task, userId: req.user.userId }); // Asocia la tarea al usuario
     await newTarea.save();
     res.status(201).json(newTarea);
   } catch (error) {
@@ -14,49 +16,36 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Obtener todas las tareas
-router.get('/', async (req, res) => {
+// Obtener todas las tareas del usuario autenticado
+router.get('/', verifyToken, async (req, res) => {
   try {
-    const tareas = await Tarea.find();
+    const tareas = await Tarea.find({ userId: req.user.userId }); // Filtra por userId
     res.status(200).json(tareas);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// Obtener una tarea por ID
-router.get('/:id', async (req, res) => {
+// Actualizar una tarea del usuario autenticado
+router.put('/:id', verifyToken, async (req, res) => {
   try {
-    const tarea = await Tarea.findById(req.params.id);
-    if (!tarea) {
-      return res.status(404).json({ message: 'Tarea no encontrada' });
-    }
+    const tarea = await Tarea.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.userId }, // Asegura que el usuario solo actualice sus tareas
+      req.body,
+      { new: true }
+    );
+    if (!tarea) return res.status(404).json({ message: 'Tarea no encontrada' });
     res.status(200).json(tarea);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// Actualizar una tarea
-router.put('/:id', async (req, res) => {
+// Eliminar una tarea del usuario autenticado
+router.delete('/:id', verifyToken, async (req, res) => {
   try {
-    const tarea = await Tarea.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!tarea) {
-      return res.status(404).json({ message: 'Tarea no encontrada' });
-    }
-    res.status(200).json(tarea);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// Eliminar una tarea
-router.delete('/:id', async (req, res) => {
-  try {
-    const tarea = await Tarea.findByIdAndDelete(req.params.id);
-    if (!tarea) {
-      return res.status(404).json({ message: 'Tarea no encontrada' });
-    }
+    const tarea = await Tarea.findOneAndDelete({ _id: req.params.id, userId: req.user.userId });
+    if (!tarea) return res.status(404).json({ message: 'Tarea no encontrada' });
     res.status(200).json({ message: 'Tarea eliminada' });
   } catch (error) {
     res.status(400).json({ message: error.message });

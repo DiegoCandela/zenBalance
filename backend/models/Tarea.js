@@ -1,13 +1,19 @@
+// Tarea.js
 const mongoose = require('mongoose');
 
 const TareaSchema = new mongoose.Schema({
   task: {
     type: String,
-    required: true,  // Asegúrate de que el campo sea obligatorio
+    required: true,
   },
   completed: {
     type: Boolean,
-    default: false, // Por defecto, la tarea no está completada
+    default: false,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
   },
 });
 

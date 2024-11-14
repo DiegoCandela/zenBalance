@@ -1,0 +1,69 @@
+/* src/components/styles/Nosotros.css */
+
+/* Contenedor principal */
+.nosotros-container {
+    max-width: 900px;
+    margin: 80px auto 40px; /* Usar margin-top para separación externa con el navbar */
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e0e0e0;
+  }
+  
+  /* Estilos para cada sección */
+  .section {
+    margin-bottom: 40px;
+  }
+  
+  /* Títulos de sección */
+  .section-title {
+    font-size: 2rem;
+    color: #0078d7;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 2px solid #0078d7;
+    padding-bottom: 10px;
+  }
+  
+  /* Contenido de cada sección */
+  .section-content {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.8;
+    text-align: justify;
+    margin: 0 20px;
+  }
+  
+  /* Diseño responsive */
+  @media (max-width: 768px) {
+    .nosotros-container {
+      padding: 20px;
+      margin: 60px auto 30px; /* Ajuste de margin-top en pantallas medianas */
+    }
+  
+    .section-title {
+      font-size: 1.6rem;
+    }
+  
+    .section-content {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .nosotros-container {
+      padding: 15px;
+      margin: 50px auto 20px; /* Ajuste de margin-top en pantallas pequeñas */
+    }
+  
+    .section-title {
+      font-size: 1.4rem;
+    }
+  
+    .section-content {
+      font-size: 0.95rem;
+    }
+  }
+  

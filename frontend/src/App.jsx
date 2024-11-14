@@ -9,6 +9,7 @@ import Login from './assets/components/Login';
 import Perfil from './assets/components/Perfil';
 import { UserProvider } from './assets/context/UserContext';
 import Register from './assets/components/Register';
+import Nosotros from './assets/components/Nosotros';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/perfil" element={<Perfil />} />
+            <Route path="/nosotros" element={<Nosotros />} />
           </Routes>
         </main>
         <Footer />

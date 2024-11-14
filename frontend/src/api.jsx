@@ -16,11 +16,12 @@ api.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-// Funciones para realizar las solicitudes
-export const registerUser = async (data) => api.post('/auth/register', data);
-export const loginUser = async (data) => api.post('/auth/login', data);
-export const getUser = async () => api.get('/auth/profile');
-export const fetchTasks = async () => api.get('/tareas');
-export const createTask = async (data) => api.post('/tareas', data);
+// Funciones para realizar las solicitudes con manejo de errores
+export const registerUser = (data) => api.post('/auth/register', data);
+export const loginUser = (data) => api.post('/auth/login', data);
+export const getUser = () => api.get('/auth/profile');
+export const fetchTasks = () => api.get('/tareas');
+export const createTask = (data) => api.post('/tareas', data);
+
 
 export default api;
