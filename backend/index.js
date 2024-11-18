@@ -27,6 +27,7 @@ app.use('/api/tareas', tareaRoutes);
 app.use('/api/recursos', recursoRoutes); // Configurar ruta para recursos
 
 // Iniciar servidor
-app.listen(process.env.PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${process.env.PORT}`);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
