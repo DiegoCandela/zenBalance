@@ -6,21 +6,23 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("user"); // Nuevo estado para el rol del usuario
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");
-
-    if (storedUser && storedUser.name && token) {
-      console.log("Usuario autenticado:", storedUser.name);
+  
+    if (storedUser && token) {
       setUsername(storedUser.name);
-      setRole(storedUser.role || "user"); // Asignar el rol almacenado o 'user' por defecto
-      setIsAuthenticated(true);
+      setRole(storedUser.role || "user");
+      setIsAuthenticated(true); // Usuario autenticado
+      console.log("Autenticación exitosa:", storedUser.name);
     } else {
-      console.log("No hay usuario autenticado o falta el token");
+      setIsAuthenticated(false); // Usuario no autenticado
+      console.log("No hay usuario o token válido");
     }
   }, []);
+  
 
   const updateUser = (name, userRole = "user") => {
     setUsername(name);

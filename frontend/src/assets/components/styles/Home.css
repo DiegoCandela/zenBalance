@@ -93,16 +93,36 @@ body {
     transition: all 0.3s ease;
     width: auto; /* Asegura que el botón solo tome el ancho necesario */
     max-width: 50%; /* Establece un ancho máximo */
+    text-decoration: none; /* Elimina el subrayado */
 }
 
 .cta-button:hover {
     background-color: #357abd;
     transform: translateY(-2px);
+    text-decoration: none;
 }
 
 .cta-button:active {
     transform: translateY(0);
+    text-decoration: none;
 }
+
+.cta-link {
+    text-decoration: none; /* Elimina el subrayado */
+    color: white; /* Mantiene el color blanco */
+    display: inline-block; /* Asegura el comportamiento de botón */
+    width: 100%; /* Opcional: Ajusta el ancho */
+}
+
+.cta-button:hover .cta-link {
+    text-decoration: none; /* Asegura que no se subraye al pasar el cursor */
+    color: white; /* Mantén el color al pasar el cursor */
+}
+
+.cta-button:active .cta-link {
+    text-decoration: none; /* Asegura que no se subraye al hacer clic */
+}
+
 
 /* Sección FAQ */
 .faq-container {

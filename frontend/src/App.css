@@ -36,12 +36,26 @@
 }
 
 body {
-  font-family: var(--font-primary);
-  font-size: var(--font-size-medium);
-  color: var(--text-color);
-  background-color: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
   margin: 0;
   padding: 0;
+  font-family: var(--font-primary);
+  background-color: #f0f2f5;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Configuración para mantener el footer al final */
+}
+
+main {
+  flex: 1; /* Permite que el contenido principal crezca y ocupe el espacio disponible */
+  margin-top: 13vh; /* Evita que el contenido quede detrás del navbar */
+  margin-bottom: 10vh; /* Espacio reservado para el footer */
+  padding: var(--padding-standard); /* Opcional: Padding para el contenido */
   box-sizing: border-box;
 }
 

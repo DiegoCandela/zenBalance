@@ -1,7 +1,7 @@
-// src/components/Recursos.jsx
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { UserContext } from "../context/UserContext"; // Importar el contexto de usuario
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 import "./styles/Recursos.css";
 
 const Recursos = () => {
@@ -10,12 +10,41 @@ const Recursos = () => {
   const [file, setFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
   const [recursos, setRecursos] = useState([]);
-  const { role } = useContext(UserContext); // Obtener el rol desde el contexto
+  const { role, isAuthenticated } = useContext(UserContext);
   const [activeTab, setActiveTab] = useState("all");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchRecursos();
-  }, []);
+    // Validar el estado de autenticación
+    if (isAuthenticated === null) {
+      console.log("Esperando autenticación...");
+      return;
+    }
+    if (isAuthenticated === false) {
+      console.log("Usuario no autenticado. Redirigiendo al login.");
+      navigate("/login");
+    } else {
+      console.log("Usuario autenticado. Cargando recursos.");
+      fetchRecursos();
+    }
+  }, [isAuthenticated, navigate]);
+
+  const fetchRecursos = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/recursos", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setRecursos(response.data);
+    } catch (error) {
+      console.error("Error al obtener recursos:", error);
+      if (error.response?.status === 401) {
+        console.error("Token inválido. Redirigiendo al login.");
+        navigate("/login");
+      }
+    }
+  };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -55,36 +84,8 @@ const Recursos = () => {
       setFilePreview(null);
       fetchRecursos();
     } catch (error) {
-      console.error("Error al crear recurso", error);
+      console.error("Error al crear recurso:", error);
       alert("Error al crear recurso");
-    }
-  };
-
-  const fetchRecursos = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/recursos", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      setRecursos(response.data);
-    } catch (error) {
-      console.error("Error al obtener recursos", error);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/recursos/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      alert("Recurso eliminado");
-      fetchRecursos();
-    } catch (error) {
-      console.error("Error al eliminar recurso", error);
-      alert("Error al eliminar recurso");
     }
   };
 
@@ -117,6 +118,11 @@ const Recursos = () => {
         return recursos;
     }
   };
+
+  // Mientras se valida la autenticación
+  if (isAuthenticated === null) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <div className="recursos-container">
