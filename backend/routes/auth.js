@@ -20,6 +20,18 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+// Middleware para verificar roles
+const verifyRole = (requiredRole) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(403).json({ message: 'Token no válido o no proporcionado.' });
+    }
+    if (req.user.role !== requiredRole) {
+      return res.status(403).json({ message: `Acceso denegado: se requiere el rol de ${requiredRole}` });
+    }
+    next();
+  };
+};
 
 // Ruta de login
 router.post('/login', async (req, res) => {
@@ -35,8 +47,18 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Contraseña incorrecta' });
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ message: 'Login exitoso', token, user: { name: user.username } });
+    // Incluye el rol en el token
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    res.json({ 
+      message: 'Login exitoso', 
+      token, 
+      user: { name: user.username, role: user.role } 
+    });
   } catch (error) {
     res.status(500).json({ message: 'Error en el servidor', error });
   }
@@ -45,7 +67,7 @@ router.post('/login', async (req, res) => {
 // Ruta de registro
 router.post('/register', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     // Verificar si el usuario ya está registrado
     const existingUser = await User.findOne({ email });
@@ -53,8 +75,13 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'El correo ya está en uso.' });
     }
 
-    // Crear un nuevo usuario
-    const newUser = new User({ username, email, password });
+    // Crear un nuevo usuario con el rol especificado (por defecto, "user")
+    const newUser = new User({ 
+      username, 
+      email, 
+      password, 
+      role: role || 'user' 
+    });
 
     // Guardar el usuario en la base de datos
     await newUser.save();
@@ -65,19 +92,17 @@ router.post('/register', async (req, res) => {
   }
 });
 
-
 // Ruta para obtener el perfil del usuario autenticado
 router.get('/profile', verifyToken, async (req, res) => {
   const { userId } = req.user;
   try {
-    const user = await User.findById(userId).select('username age personalDescription improvementDescription');
+    const user = await User.findById(userId).select('username age personalDescription improvementDescription role');
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
     res.json(user);
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener el perfil', error });
   }
 });
-
 
 // Ruta para actualizar información adicional del usuario
 router.put('/update-profile', verifyToken, async (req, res) => {
@@ -95,6 +120,11 @@ router.put('/update-profile', verifyToken, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error en el servidor', error });
   }
+});
+
+// Ruta de ejemplo protegida por rol de administrador
+router.get('/admin', verifyToken, verifyRole('admin'), (req, res) => {
+  res.status(200).json({ message: 'Acceso concedido al administrador' });
 });
 
 module.exports = router;

@@ -48,7 +48,7 @@ const Navbar = () => {
                     <ul className="navbar__links">
                         <li><Link to="/" className="navbar__link">INICIO</Link></li>
                         {isAuthenticated && <li><Link to="/perfil" className="navbar__link">PERFIL</Link></li>}
-                        <li><a href="#services" className="navbar__link">RECURSOS</a></li>
+                        <li><a href="/recursos" className="navbar__link">RECURSOS</a></li>
                         <li><Link to="/nosotros" className="navbar__link">NOSOTROS</Link></li>
                     </ul>
                 </nav>

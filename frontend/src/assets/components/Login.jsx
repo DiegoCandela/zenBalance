@@ -23,11 +23,15 @@ const Login = () => {
       });
 
       const { token, user } = response.data;
+
+      // Guarda el token y el usuario (incluido el rol) en el localStorage
       localStorage.setItem('token', token);
-      localStorage.setItem("user", JSON.stringify({ name: user.name }));
-      
-      updateUser(user.name);  // Actualizar el contexto con el nombre del usuario
-      console.log("Inicio de sesión exitoso, usuario:", user.name);
+      localStorage.setItem("user", JSON.stringify({ name: user.name, role: user.role }));
+
+      // Actualiza el contexto con el nombre y el rol del usuario
+      updateUser(user.name, user.role);
+
+      console.log("Inicio de sesión exitoso, usuario:", user);
       navigate('/');
     } catch (error) {
       setError('Error al iniciar sesión. Verifica tus credenciales.');
@@ -64,4 +68,3 @@ const Login = () => {
 };
 
 export default Login;
-  

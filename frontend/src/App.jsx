@@ -10,20 +10,22 @@ import Perfil from './assets/components/Perfil';
 import { UserProvider } from './assets/context/UserContext';
 import Register from './assets/components/Register';
 import Nosotros from './assets/components/Nosotros';
-
+import Recursos from './assets/components/Recursos'; // Importa el componente Recursos
 
 function App() {
   return (
     <UserProvider>
       <Router>
         <Navbar />
-        <main style={{ marginTop: '13vh', marginBottom: '10vh' }}> {/* Márgenes para evitar que el contenido quede detrás del navbar y footer */}
+        <main style={{ marginTop: '13vh', marginBottom: '10vh' }}>
+          {/* Márgenes para evitar que el contenido quede detrás del navbar y footer */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/nosotros" element={<Nosotros />} />
+            <Route path="/recursos" element={<Recursos />} /> {/* Agregada ruta para Recursos */}
           </Routes>
         </main>
         <Footer />
@@ -33,3 +35,4 @@ function App() {
 }
 
 export default App;
+
