@@ -69,11 +69,7 @@
   position: relative; /* Posicionamiento relativo para el efecto hover */
   font-size: 1rem; /* Ajustar el tamaño del enlace */
   margin: 0; /* Eliminar margen */
-}
-
-.footer__link:hover {
-  color: #ffcc00; /* Cambio de color al pasar el mouse */
-  transform: scale(1.1); /* Efecto de aumento al pasar el mouse */
+  list-style: none;
 }
 
 /* Estilo del autor */

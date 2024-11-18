@@ -1,25 +1,39 @@
-// routes/recursos.js
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 const Recurso = require('../models/Recurso');
-const authorize = require('../middlewares/authorize'); // Permite a todos los usuarios autenticados
-const authorizeAdmin = require('../middlewares/authorizeAdmin'); // Solo para administradores
+const authorize = require('../middlewares/authorize');
+const authorizeAdmin = require('../middlewares/authorizeAdmin');
 
-// Configuración de almacenamiento de `multer`
+// Configuración de almacenamiento y validación de archivos con multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Carpeta donde se guardarán los archivos
+    const uploadPath = path.join(__dirname, '..', 'uploads');
+    cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Nombre único del archivo basado en timestamp
+    cb(null, `${Date.now()}${path.extname(file.originalname)}`);
   },
 });
-const upload = multer({ storage: storage });
 
-// Ruta para obtener todos los recursos (accesible para todos los usuarios autenticados)
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = ['image/jpeg', 'image/png', 'video/mp4', 'audio/mpeg', 'audio/wav'];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Tipo de archivo no permitido. Solo imágenes, videos y audios están permitidos.'));
+  }
+};
+
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 10 * 1024 * 1024 }, // Límite de 10 MB
+});
+
+// Ruta para obtener todos los recursos
 router.get('/', authorize, async (req, res) => {
   try {
     const recursos = await Recurso.find();
@@ -29,11 +43,17 @@ router.get('/', authorize, async (req, res) => {
   }
 });
 
-// Ruta para crear un recurso (solo accesible para administradores)
+// Ruta para crear un recurso
 router.post('/', authorizeAdmin, upload.single('file'), async (req, res) => {
   try {
     const { title, description } = req.body;
-    const fileUrl = req.file ? `/uploads/${req.file.filename}` : null; // URL del archivo
+
+    // Validación de datos
+    if (!title || !description) {
+      return res.status(400).json({ message: 'El título y la descripción son obligatorios.' });
+    }
+
+    const fileUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
     const newRecurso = new Recurso({
       title,
@@ -44,11 +64,12 @@ router.post('/', authorizeAdmin, upload.single('file'), async (req, res) => {
     await newRecurso.save();
     res.status(201).json(newRecurso);
   } catch (error) {
-    res.status(400).json({ message: 'Error al crear el recurso', error });
+    console.error('Error al crear recurso:', error);
+    res.status(500).json({ message: 'Error al crear el recurso', error });
   }
 });
 
-// Ruta para eliminar un recurso (solo accesible para administradores)
+// Ruta para eliminar un recurso
 router.delete('/:id', authorizeAdmin, async (req, res) => {
   try {
     const recurso = await Recurso.findById(req.params.id);
@@ -56,23 +77,17 @@ router.delete('/:id', authorizeAdmin, async (req, res) => {
       return res.status(404).json({ message: 'Recurso no encontrado' });
     }
 
-    // Verificar si el archivo existe antes de intentar eliminarlo
+    // Eliminar el archivo asociado si existe
     if (recurso.fileUrl) {
       const filePath = path.join(__dirname, '..', recurso.fileUrl);
-      fs.access(filePath, fs.constants.F_OK, (err) => {
-        if (!err) {
-          // Si el archivo existe, intenta eliminarlo
-          fs.unlink(filePath, (err) => {
-            if (err) {
-              console.error('Error al eliminar el archivo:', err);
-            } else {
-              console.log('Archivo eliminado:', recurso.fileUrl);
-            }
-          });
-        } else {
-          console.warn('Archivo no encontrado:', recurso.fileUrl);
+      try {
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+          console.log('Archivo eliminado:', filePath);
         }
-      });
+      } catch (err) {
+        console.error('Error al eliminar el archivo:', err);
+      }
     }
 
     // Eliminar el recurso de la base de datos
@@ -81,6 +96,17 @@ router.delete('/:id', authorizeAdmin, async (req, res) => {
   } catch (error) {
     console.error('Error al eliminar el recurso:', error);
     res.status(500).json({ message: 'Error al eliminar el recurso', error });
+  }
+});
+
+// Manejo de errores en multer
+router.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    res.status(400).json({ message: `Error en la subida de archivo: ${err.message}` });
+  } else if (err) {
+    res.status(400).json({ message: `Error: ${err.message}` });
+  } else {
+    next();
   }
 });
 

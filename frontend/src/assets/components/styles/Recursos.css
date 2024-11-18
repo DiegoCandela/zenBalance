@@ -1,0 +1,295 @@
+/* Recursos.css */
+.recursos-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .recursos-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  /* Estilos del formulario */
+  .recursos-form {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+  
+  .file-input {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .submit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos de las pestañas */
+  .recursos-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .tab-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+  }
+  
+  .tab-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .tab-button.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  /* Estilos de la lista de recursos */
+  .recursos-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .recurso-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .recurso-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .recurso-title {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.25rem;
+  }
+  
+  .recurso-description {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+  
+  /* Contenedores de archivos */
+  .recurso-preview {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .video-container,
+  .audio-container,
+  .document-container {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .video-container video {
+    width: 100%;
+    border-radius: 8px;
+    max-height: 300px;
+  }
+  
+  .audio-container audio {
+    width: 100%;
+  }
+  
+  .image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    min-height: 200px;
+  }
+  
+  .resource-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .resource-image:hover {
+    transform: scale(1.02);
+  }
+  
+  .document-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+  }
+  
+  .download-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-weight: 500;
+  }
+  
+  .download-link:hover {
+    background-color: #218838;
+    text-decoration: none;
+    color: white;
+  }
+  
+  /* Vista previa de archivos en el formulario */
+  .file-preview {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .file-preview img,
+  .file-preview video {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  
+  /* Botón de eliminar */
+  .delete-button {
+    width: 100%;
+    padding: 8px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: auto;
+    transition: background-color 0.3s;
+    font-weight: 500;
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .recursos-container {
+      padding: 10px;
+    }
+  
+    .recursos-list {
+      grid-template-columns: 1fr;
+    }
+    
+    .recursos-tabs {
+      flex-wrap: wrap;
+    }
+    
+    .tab-button {
+      flex: 1 1 calc(50% - 10px);
+      font-size: 14px;
+      padding: 8px 12px;
+    }
+  
+    .image-container {
+      min-height: 150px;
+    }
+    
+    .resource-image {
+      max-height: 300px;
+    }
+  
+    .recurso-title {
+      font-size: 1.1rem;
+    }
+  
+    .form-input,
+    .submit-button {
+      font-size: 14px;
+    }
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .recurso-card {
+    animation: fadeIn 0.3s ease-out;
+  }

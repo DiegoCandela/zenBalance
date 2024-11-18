@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../img/Logo.jpg";
 import "./styles/Footer.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -11,9 +12,13 @@ const Footer = () => {
           <span className="footer__site-name">ZenBalance</span>
         </div>
         <div className="footer__links">
-          <p className="footer__link">MISIÓN</p>
-          <p className="footer__link">VISIÓN</p>
-          <p className="footer__link">POLÍTICAS DE PRIVACIDAD</p>
+          <p><Link to="/nosotros" className="footer__link">MISIÓN</Link></p>
+          <p><Link to="/nosotros" className="footer__link">VISIÓN</Link></p>
+          <div>
+            <p><Link to="/nosotros" className="footer__link">POLÍTICAS DE TRATAMIENTO DE</Link></p>
+            <p><Link to="/nosotros" className="footer__link">DATOS PERSONALES</Link></p>
+          </div>
+          
         </div>
         <p className="footer__author">
           ELABORADO POR: David Gomez, Diego Candela.
