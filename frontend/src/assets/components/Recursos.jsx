@@ -31,15 +31,18 @@ const Recursos = () => {
 
   const fetchRecursos = async () => {
     try {
-      const response = await axios.get("https://zenbalance.onrender.com/api/recursos", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        "https://zenbalance.onrender.com/api/recursos",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       setRecursos(response.data);
     } catch (error) {
       console.error("Error al obtener recursos:", error);
-      if (error.response?.status === 401) {
+      if (error.response?.status === 401 || error.response?.status === 403) {
         console.error("Token inválido. Redirigiendo al login.");
         navigate("/login");
       }
@@ -48,46 +51,83 @@ const Recursos = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    setFile(selectedFile);
-
-    if (
-      selectedFile &&
-      (selectedFile.type.startsWith("image/") ||
-        selectedFile.type.startsWith("video/"))
-    ) {
-      setFilePreview(URL.createObjectURL(selectedFile));
-    } else {
-      setFilePreview(null);
+  
+    if (!selectedFile) {
+      alert("No se seleccionó ningún archivo.");
+      return;
     }
+  
+    console.log("Tipo MIME del archivo seleccionado:", selectedFile.type);
+    setFile(selectedFile);
+  
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "video/mp4",
+      "application/pdf",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/msword",
+    ];
+  
+    if (!allowedTypes.includes(selectedFile.type)) {
+      alert("Tipo de archivo no permitido. Solo imágenes, videos, PDF y documentos Word están permitidos.");
+      setFile(null);
+      setFilePreview(null);
+      return;
+    }
+  
+    setFilePreview(URL.createObjectURL(selectedFile));
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     if (file) {
       formData.append("file", file);
     }
-
+  
+    console.log("Datos enviados:");
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value instanceof File ? value.name : value}`);
+    }
+  
     try {
-      await axios.post("https://zenbalance.onrender.com/api/recursos", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      alert("Recurso creado");
-      setTitle("");
-      setDescription("");
-      setFile(null);
-      setFilePreview(null);
-      fetchRecursos();
+      const response = await axios.post(
+        "https://zenbalance.onrender.com/api/recursos",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+  
+      if (response.status === 201) {
+        alert("Recurso creado");
+        setTitle("");
+        setDescription("");
+        setFile(null);
+        setFilePreview(null);
+        fetchRecursos();
+      }
     } catch (error) {
-      console.error("Error al crear recurso:", error);
-      alert("Error al crear recurso");
+      if (error.response) {
+        console.error("Error del servidor:", error.response.data);
+        alert(error.response.data.message || "Error al crear recurso");
+      } else {
+        console.error("Error de red:", error);
+        alert("Error de red al crear recurso");
+      }
     }
   };
+  
+  
+  
 
   const filterRecursos = (type) => {
     switch (type) {
@@ -125,8 +165,9 @@ const Recursos = () => {
   }
 
   const handleDelete = async (id) => {
-    if (!window.confirm("¿Estás seguro de que deseas eliminar este recurso?")) return;
-  
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este recurso?"))
+      return;
+
     try {
       await axios.delete(`https://zenbalance.onrender.com/api/recursos/${id}`, {
         headers: {
@@ -140,7 +181,6 @@ const Recursos = () => {
       alert("Error al eliminar el recurso");
     }
   };
-  
 
   return (
     <div className="recursos-container">
@@ -239,7 +279,9 @@ const Recursos = () => {
                   recurso.fileUrl.endsWith(".wav") ? (
                   <div className="audio-container">
                     <audio controls>
-                      <source src={`https://zenbalance.onrender.com${recurso.fileUrl}`} />
+                      <source
+                        src={`https://zenbalance.onrender.com${recurso.fileUrl}`}
+                      />
                       Tu navegador no soporta la reproducción de audio.
                     </audio>
                   </div>
@@ -259,7 +301,9 @@ const Recursos = () => {
                       rel="noopener noreferrer"
                       className="download-link"
                     >
-                      Descargar archivo
+                      {recurso.fileUrl.endsWith(".pdf")
+                        ? "Ver PDF"
+                        : "Descargar Documento"}
                     </a>
                   </div>
                 )}
