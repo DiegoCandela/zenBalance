@@ -124,6 +124,24 @@ const Recursos = () => {
     return <div>Cargando...</div>;
   }
 
+  const handleDelete = async (id) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este recurso?")) return;
+  
+    try {
+      await axios.delete(`https://zenbalance.onrender.com/api/recursos/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      alert("Recurso eliminado correctamente");
+      fetchRecursos(); // Actualiza la lista de recursos
+    } catch (error) {
+      console.error("Error al eliminar el recurso:", error);
+      alert("Error al eliminar el recurso");
+    }
+  };
+  
+
   return (
     <div className="recursos-container">
       <h1 className="recursos-title">Recursos</h1>
