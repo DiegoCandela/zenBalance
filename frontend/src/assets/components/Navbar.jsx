@@ -48,15 +48,15 @@ const Navbar = () => {
                     <ul className="navbar__links">
                         <li><Link to="/" className="navbar__link">INICIO</Link></li>
                         {isAuthenticated && <li><Link to="/perfil" className="navbar__link">PERFIL</Link></li>}
-                        <li><a href="/recursos" className="navbar__link">RECURSOS</a></li>
+                        <li><Link to="/recursos" className="navbar__link">RECURSOS</Link></li>
                         <li><Link to="/nosotros" className="navbar__link">NOSOTROS</Link></li>
                     </ul>
                 </nav>
                 <div className="navbar__login-container">
-                    <a href="/perfil" className="navbar__login" onClick={handleLoginClick}>
+                    <Link to="/perfil" className="navbar__login" onClick={handleLoginClick}>
                         <img src={User} alt="Login" className="navbar__login-img" />
                         {isAuthenticated && <span className="navbar__username">{username}</span>}
-                    </a>
+                    </Link>
                     {isAuthenticated && (
                         <Icon
                             icon="ic:baseline-logout"
