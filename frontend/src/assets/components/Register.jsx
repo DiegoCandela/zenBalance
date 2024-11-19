@@ -18,7 +18,7 @@ const Register = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post('https://zenbalance.onrender.com/api/auth/register', {
         username,
         email,
         password,

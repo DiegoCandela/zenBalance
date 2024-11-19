@@ -31,7 +31,7 @@ const Recursos = () => {
 
   const fetchRecursos = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/recursos", {
+      const response = await axios.get("https://zenbalance.onrender.com/api/recursos", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -71,7 +71,7 @@ const Recursos = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/recursos", formData, {
+      await axios.post("https://zenbalance.onrender.com/api/recursos", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -211,7 +211,7 @@ const Recursos = () => {
                   <div className="video-container">
                     <video controls>
                       <source
-                        src={`http://localhost:5000${recurso.fileUrl}`}
+                        src={`https://zenbalance.onrender.com${recurso.fileUrl}`}
                         type="video/mp4"
                       />
                       Tu navegador no soporta la vista previa de video.
@@ -221,14 +221,14 @@ const Recursos = () => {
                   recurso.fileUrl.endsWith(".wav") ? (
                   <div className="audio-container">
                     <audio controls>
-                      <source src={`http://localhost:5000${recurso.fileUrl}`} />
+                      <source src={`https://zenbalance.onrender.com${recurso.fileUrl}`} />
                       Tu navegador no soporta la reproducción de audio.
                     </audio>
                   </div>
                 ) : recurso.fileUrl.match(/\.(jpg|jpeg|png|gif)$/i) ? (
                   <div className="image-container">
                     <img
-                      src={`http://localhost:5000${recurso.fileUrl}`}
+                      src={`https://zenbalance.onrender.com${recurso.fileUrl}`}
                       alt={recurso.title}
                       className="resource-image"
                     />
@@ -236,7 +236,7 @@ const Recursos = () => {
                 ) : (
                   <div className="document-container">
                     <a
-                      href={`http://localhost:5000${recurso.fileUrl}`}
+                      href={`https://zenbalance.onrender.com${recurso.fileUrl}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="download-link"

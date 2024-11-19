@@ -33,7 +33,7 @@ const Perfil = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/api/auth/profile",
+        "https://zenbalance.onrender.com/api/auth/profile",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -55,7 +55,7 @@ const Perfil = () => {
   const fetchTasks = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/tareas", {
+      const response = await axios.get("https://zenbalance.onrender.com/api/tareas", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(response.data);
@@ -70,7 +70,7 @@ const Perfil = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:5000/api/tareas",
+        "https://zenbalance.onrender.com/api/tareas",
         { task: newTask },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -85,7 +85,7 @@ const Perfil = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `http://localhost:5000/api/tareas/${id}`,
+        `https://zenbalance.onrender.com/api/tareas/${id}`,
         { completed: !completed },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -98,7 +98,7 @@ const Perfil = () => {
   const deleteTask = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/tareas/${id}`, {
+      await axios.delete(`https://zenbalance.onrender.com/api/tareas/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(tasks.filter((task) => task._id !== id));
@@ -113,7 +113,7 @@ const Perfil = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        "http://localhost:5000/api/auth/update-profile",
+        "https://zenbalance.onrender.com/api/auth/update-profile",
         { age, personalDescription, improvementDescription },
         { headers: { Authorization: `Bearer ${token}` } }
       );
