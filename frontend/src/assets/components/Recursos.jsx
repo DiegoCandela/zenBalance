@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import Spinner from "./Spinner"; // Importa el componente Spinner
 import "./styles/Recursos.css";
 
 const Recursos = () => {
@@ -10,12 +11,12 @@ const Recursos = () => {
   const [file, setFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
   const [recursos, setRecursos] = useState([]);
+  const [loading, setLoading] = useState(false); // Estado para el spinner
   const { role, isAuthenticated } = useContext(UserContext);
   const [activeTab, setActiveTab] = useState("all");
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Validar el estado de autenticación
     if (isAuthenticated === null) {
       console.log("Esperando autenticación...");
       return;
@@ -51,15 +52,14 @@ const Recursos = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-  
     if (!selectedFile) {
       alert("No se seleccionó ningún archivo.");
       return;
     }
-  
+
     console.log("Tipo MIME del archivo seleccionado:", selectedFile.type);
     setFile(selectedFile);
-  
+
     const allowedTypes = [
       "image/jpeg",
       "image/png",
@@ -68,33 +68,35 @@ const Recursos = () => {
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "application/msword",
     ];
-  
+
     if (!allowedTypes.includes(selectedFile.type)) {
-      alert("Tipo de archivo no permitido. Solo imágenes, videos, PDF y documentos Word están permitidos.");
+      alert(
+        "Tipo de archivo no permitido. Solo imágenes, videos, PDF y documentos Word están permitidos."
+      );
       setFile(null);
       setFilePreview(null);
       return;
     }
-  
+
     setFilePreview(URL.createObjectURL(selectedFile));
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    setLoading(true); // Activar el spinner
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     if (file) {
       formData.append("file", file);
     }
-  
+
     console.log("Datos enviados:");
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value instanceof File ? value.name : value}`);
     }
-  
+
     try {
       const response = await axios.post(
         "https://zenbalance.onrender.com/api/recursos",
@@ -106,7 +108,7 @@ const Recursos = () => {
           },
         }
       );
-  
+
       if (response.status === 201) {
         alert("Recurso creado");
         setTitle("");
@@ -123,11 +125,10 @@ const Recursos = () => {
         console.error("Error de red:", error);
         alert("Error de red al crear recurso");
       }
+    } finally {
+      setLoading(false); // Desactivar el spinner
     }
   };
-  
-  
-  
 
   const filterRecursos = (type) => {
     switch (type) {
@@ -159,7 +160,6 @@ const Recursos = () => {
     }
   };
 
-  // Mientras se valida la autenticación
   if (isAuthenticated === null) {
     return <div>Cargando...</div>;
   }
@@ -175,7 +175,7 @@ const Recursos = () => {
         },
       });
       alert("Recurso eliminado correctamente");
-      fetchRecursos(); // Actualiza la lista de recursos
+      fetchRecursos();
     } catch (error) {
       console.error("Error al eliminar el recurso:", error);
       alert("Error al eliminar el recurso");
@@ -186,50 +186,55 @@ const Recursos = () => {
     <div className="recursos-container">
       <h1 className="recursos-title">Recursos</h1>
       {role === "admin" && (
-        <form onSubmit={handleSubmit} className="recursos-form">
-          <div className="form-group">
-            <input
-              type="text"
-              placeholder="Título"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="form-input"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              placeholder="Descripción"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="form-input"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="file"
-              onChange={handleFileChange}
-              className="file-input"
-            />
-          </div>
-
-          {filePreview && (
-            <div className="file-preview">
-              {file && file.type.startsWith("image/") && (
-                <img src={filePreview} alt="Vista previa" />
+        <>
+          {loading ? ( // Mostrar el spinner mientras se crea un recurso
+            <Spinner />
+          ) : (
+            <form onSubmit={handleSubmit} className="recursos-form">
+              <div className="form-group">
+                <input
+                  type="text"
+                  placeholder="Título"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  placeholder="Descripción"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className="file-input"
+                />
+              </div>
+              {filePreview && (
+                <div className="file-preview">
+                  {file && file.type.startsWith("image/") && (
+                    <img src={filePreview} alt="Vista previa" />
+                  )}
+                  {file && file.type.startsWith("video/") && (
+                    <video controls>
+                      <source src={filePreview} type={file.type} />
+                      Tu navegador no soporta la vista previa de video.
+                    </video>
+                  )}
+                </div>
               )}
-              {file && file.type.startsWith("video/") && (
-                <video controls>
-                  <source src={filePreview} type={file.type} />
-                  Tu navegador no soporta la vista previa de video.
-                </video>
-              )}
-            </div>
+              <button type="submit" className="submit-button">
+                Crear recurso
+              </button>
+            </form>
           )}
-          <button type="submit" className="submit-button">
-            Crear recurso
-          </button>
-        </form>
+        </>
       )}
       <div className="recursos-tabs">
         <button
