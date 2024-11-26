@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((error) => console.error('Error conectando a MongoDB:', error));
 
 // Configurar la carpeta para archivos cargados
-app.use('./uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Usar rutas de autenticación y tareas
 app.use('/api/auth', authRoutes);

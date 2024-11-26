@@ -64,9 +64,6 @@ const Recursos = () => {
       "image/jpeg",
       "image/png",
       "video/mp4",
-      "audio/mp3",
-      "audio/mpeg", // Para archivos MP3
-      "audio/wav",
       "application/pdf",
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "application/msword",
