@@ -27,6 +27,7 @@ const fileFilter = (req, file, cb) => {
     "image/jpeg",
     "image/png",
     "video/mp4",
+    "audio/mp3",
     "audio/mpeg",
     "audio/wav",
     "application/pdf",
